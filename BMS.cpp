@@ -10,6 +10,7 @@
 #include <iostream>
 #include <string>
 #include <stdlib.h>
+#include <iomanip>
 
 
 using namespace std;
@@ -91,10 +92,16 @@ int main() {
     cin >> pinCode;
     customerPtr->pin = CheckPinLength(customerPtr, pinCode);
 
+    // Setting defalut CNIC
+    customerPtr->cnic = "42000-******41-5";
+
     // Clearing screen
     system("CLS");
 
     cout << "\nYour pin has been set succesfully. \n";
+
+    // Setting default display settings
+    cout << fixed << setprecision(2);
 
     // Initial balance of customer is set to default 0
     customerPtr->balance = 0.0;
@@ -115,11 +122,11 @@ int main() {
             cin >> dep_amnt;
             while (dep_amnt < 0.0)
             {
-                cout << "Invalid amount entered. Enter correct amount : ";
+                cout << "\nInvalid amount entered. Enter correct amount : ";
                 cin >> dep_amnt;
             }
             customerPtr->balance = depositAmount(customerPtr, dep_amnt);
-            cout << "\nAmount deposited successfully. New account balance is " << customerPtr->balance << "\n";
+            cout << "\nAmount deposited successfully. New account balance is " <<customerPtr->balance << " /Rs.\n";
 
             break;
 
@@ -140,7 +147,7 @@ int main() {
                 cin >> with_amnt;
             }
             customerPtr->balance = withdrawAmount(customerPtr, with_amnt);
-            cout << "\nAmount withdawn successfully. New account balance is " << myCustomer.balance << "\n";
+            cout << "\nAmount withdawn successfully. New account balance is " <<  myCustomer.balance << " /Rs.\n";
 
             break;
 
@@ -150,11 +157,13 @@ int main() {
             // Displaying account info here
 
             cout << "\nYour account details are \n\n";
-            cout << "--------------------------------------------------------\n";
-            cout << " Account Holder Name : " << customerPtr->name << "\n";
-            cout << " CNIC : 42000-******41-5 \n";
-            cout << " City : " << customerPtr->city << "\n";
-            cout << " Account Balance : " << customerPtr->balance << "\n\n";
+            cout << "--------------------------------------------------------\n\n";
+
+            cout << setw(30) << left << " Account Holder Name : " << customerPtr->name << "\n";
+            cout << setw(30) << left << " CNIC : " << customerPtr->cnic << "\n";
+            cout << setw(30) << left << " City : " << customerPtr->city << "\n";
+            cout << setw(30) << left << " Account Balance : " << customerPtr->balance << " /Rs.\n\n";
+
             cout << "--------------------------------------------------------\n";
 
             break;
@@ -244,7 +253,7 @@ int CheckPinLength(customerInfo* structPtr, int pin) {
         }
         else if (c == 0)
         {
-            cout << "Your card has been blocked. \n";
+            cout << "\nYour card has been blocked. \n";
             exit(0);
         }
 
