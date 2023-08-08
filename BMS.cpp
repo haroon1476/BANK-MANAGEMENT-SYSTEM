@@ -1,8 +1,8 @@
 
 
-        // ------------------------------------------------------------------------------------ //
-       // ----------------  BANK MANAGEMENT SYSTEM IN C++ BY HAROON UR RASHEED  -------------- //
-      // ------------------------------------------------------------------------------------ //
+// ------------------------------------------------------------------------------------ //
+// ----------------  BANK MANAGEMENT SYSTEM IN C++ BY HAROON UR RASHEED  -------------- //
+// ------------------------------------------------------------------------------------ //
 
 
 // INCLUDING HEADER FILES
@@ -51,18 +51,17 @@ void displayMenu();
 int main() {
 
 
-    // Declared my structure object
-    customerInfo myCustomer;
-
-    // making a pointer structure and storing the address of my initialized structure to it
+    // Declaring a pointer to customerInfo
     customerInfo* customerPtr = nullptr;
-    customerPtr = &myCustomer;
+
+    // Dynamically allocating memory for the structure through that pointer
+    customerPtr = new customerInfo;
 
 
     // VARIBLES DEFINING SECTION
     string name;
-    int pinCode , prev_pin, new_pin , opt;
-    double dep_amnt , with_amnt;
+    int pinCode, prev_pin, new_pin, opt;
+    double dep_amnt, width_amnt;
     char tryAgain;
 
 
@@ -126,7 +125,7 @@ int main() {
                 cin >> dep_amnt;
             }
             customerPtr->balance = depositAmount(customerPtr, dep_amnt);
-            cout << "\nAmount deposited successfully. New account balance is " <<customerPtr->balance << " /Rs.\n";
+            cout << "\n" << dep_amnt << " /Rs deposited successfully. New account balance is " << customerPtr->balance << " /Rs.\n";
 
             break;
 
@@ -135,19 +134,19 @@ int main() {
 
             // Widthdrawing amount here
             cout << "\nEnter amount you want to withdraw in your account : ";
-            cin >> with_amnt;
-            while (with_amnt < 0.0)
+            cin >> width_amnt;
+            while (width_amnt < 0.0)
             {
                 cout << "\nInvalid amount entered. Enter correct amount : ";
-                cin >> with_amnt;
+                cin >> width_amnt;
             }
-            while (with_amnt > customerPtr->balance)
+            while (width_amnt > customerPtr->balance)
             {
                 cout << "\nYou donot have enough balance in your account. Enter amount again : ";
-                cin >> with_amnt;
+                cin >> width_amnt;
             }
-            customerPtr->balance = withdrawAmount(customerPtr, with_amnt);
-            cout << "\nAmount withdawn successfully. New account balance is " <<  myCustomer.balance << " /Rs.\n";
+            customerPtr->balance = withdrawAmount(customerPtr, width_amnt);
+            cout << "\n" << width_amnt << " /Rs deposited successfully. New account balance is " << customerPtr->balance << " /Rs.\n";
 
             break;
 
@@ -188,12 +187,12 @@ int main() {
             cout << "\nPassword changed successfully. New pincode is " << customerPtr->pin << "\n";
 
             break;
-           
+
 
         case 5:
 
             // Displaying balance here
-            cout << "\nYour account balance is " << customerPtr->balance << "\n";
+            cout << "\nYour account balance is " << customerPtr->balance << " /Rs.\n";
 
             break;
 
@@ -215,18 +214,20 @@ int main() {
         }
 
         // Checking if the user wants to make another transaction or not
-        cout << "\nDo you want to make another transaction ? (Y \ N) : ";
+        cout << "\nDo you want to make another transaction ? (Y / N) : ";
         cin >> tryAgain;
 
         while (tryAgain != 'y' && tryAgain != 'Y' && tryAgain != 'n' && tryAgain != 'N')
         {
-            cout << "\nInvalid option selected. Enter (Y\N) : ";
+            cout << "\nInvalid option selected. Enter (Y/N) : ";
             cin >> tryAgain;
         }
 
     } while (tryAgain == 'Y' || tryAgain == 'y');
 
 
+    // Deleting the dynamically allocated memory before the program exits
+    delete customerPtr;
 
 
     return 0;
@@ -257,7 +258,7 @@ int CheckPinLength(customerInfo* structPtr, int pin) {
             exit(0);
         }
 
-        cout << " Enter again : " ;
+        cout << " Enter again : ";
         cin >> pin;
     }
 
@@ -302,7 +303,7 @@ void checkPinCode(customerInfo* structPtr, int pinCode) {
     {
         c--;
         cout << "\nIncorrect pin. ";
-        
+
         if (c == 1)
         {
             cout << "This is your last attempt. In case of incorrect pin , your account will be blocked.";
@@ -350,6 +351,6 @@ int changePinCode(customerInfo* structPtr, int pinCode) {
 
 
 
-          // -------------------------------------------------------------------------------- //
-         // ------------------------------ THAT'S ALL -------------------------------------- // 
-        // -------------------------------------------------------------------------------- //
+// -------------------------------------------------------------------------------- //
+// ------------------------------ THAT'S ALL -------------------------------------- // 
+// -------------------------------------------------------------------------------- //
